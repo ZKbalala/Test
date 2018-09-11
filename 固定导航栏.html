@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        img {
+            vertical-align: top;
+        }
+        .main {
+            margin: 0 auto;
+            width: 1000px;
+            margin-top: 10px;
+        }
+        #Q-nav1 {
+            overflow: hidden;
+        }
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+
+    <script src="my.js"></script>
+    <script>
+        window.onload = function () {
+            var topDiv = document.getElementById("top");
+            var height = topDiv.offsetHeight;
+            var middle = document.getElementById("Q-nav1");
+            var main = document.getElementById("main");
+
+            window.onscroll = function () {
+                //判断 ，被卷曲的头部的大小
+                if (scroll().top > height) {
+                    middle.className += " fixed";//fixrd前有一个空格！！！
+                    main.style.paddingTop = middle.offsetHeight+ "px";
+                }else{
+                    middle.className = "";
+                    main.style.paddingTop = 0;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="top" id="top">
+        <img src="images/top.png" alt="">
+    </div>
+    <div id="Q-nav1">
+        <img src="images/nav.png" alt="">
+    </div>
+    <div class="main" id="main">
+        <img src="images/main.png" alt="">
+    </div>
+</body>
+</html>

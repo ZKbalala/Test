@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            height: 5000px;
+        }
+        img {
+            width: 100px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            padding: 10px 0;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/img.jpg">
+
+    <script>
+        var img = document.getElementsByTagName("img")[0];
+
+        var targetx = 0;
+        var targety = 0;
+        var leaderx = 0;
+        var leadery = 0;
+        var timer = null;
+        
+        document.onclick = function (event) {
+            //新五步
+            event = event || window.event;
+            var pagey = event.pageY || scroll().top + event.clientY;
+            var pagex = event.pageX || scroll().left + event.clientX;
+
+            //方法一
+            //targety = pagey - img.offsetHeight/2;
+            //targetx = pagex - img.offsetLeft/2;
+            //方法二
+            targety = pagey - 30;
+            targetx = pagex - 50;
+
+            clearInterval(timer);
+            timer = setInterval(function () {
+                //为盒子的位置获取值
+                leaderx = img.offsetLeft;
+
+                var stepx = (targetx - leaderx)/10;
+                stepx = stepx>0?Math.ceil(stepx):Math.floor(stepx);
+                leaderx = leaderx + stepx;
+
+                img.style.left = leaderx + "px";
+
+                //为盒子的位置获取值
+                leadery = img.offsetTop;
+
+                var stepy = (targety - leadery)/10;
+                stepy = stepy>0?Math.ceil(stepy):Math.floor(stepy);
+                leadery = leadery + stepy
+
+                img.style.top = leadery + "px";
+                
+                //如果用方法一的话还要清除定时器
+                //否则会发生抖动
+                //if(Math.abs(targety - img.offsetTop) <= Math.abs(stepy) && Math.abs(targetx - img.offsetLeft) <= Math.abs(stepx)) {
+                //    img.style.top = targety + "px";
+                //    img.style.left = targetx + "px";
+                //    clearInterval(timer);
+                //}
+            },25);
+        }
+    </script>
+</body>
+</html>

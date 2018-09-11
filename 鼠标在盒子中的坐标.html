@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 200px;
+            padding-top: 100px;
+            background-color: pink;
+            margin: 100px;
+            text-align: center;
+            font: 18px/30px "simsun";
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+
+    <script src="my.js"></script>
+    <script>
+        var div = document.getElementsByTagName("div")[0];
+
+        div.onmousemove = function (event) {
+        //获取鼠标在整个页面的位置
+        //获取盒子在整个页面的位置
+        //用鼠标的位置减去盒子的位置赋值给盒子的内容。
+        event = event || window.event;
+        var pagex = event.pageX || scroll().left + event.clientX;
+        var pagey = event.pageY || scroll().top + event.clientY;
+
+        var targetx = pagex - div.offsetLeft;
+        var targety = pagey - div.offsetTop;
+
+        this.innerHTML = "鼠标在盒子中的X坐标为：" + targetx + "px;<br>鼠标在盒子中的Y坐标为：" + targety + "px;"
+        }
+    </script>
+</body>
+</html>

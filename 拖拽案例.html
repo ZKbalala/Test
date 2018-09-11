@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .nav {
+            height: 30px;
+            background-color: #036663;
+            line-height: 30px;
+            padding-left: 30px;
+            border-bottom: 1px solid #369;
+        }
+        .nav a {
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .d-box {
+            width: 400px;
+            height: 300px;
+            border: solid 5px #eee;
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            box-shadow: 2px 2px 2px 2px #666;
+        }
+        .hd {
+            width: 100%;
+            height: 25px;
+            background-color: #7c9299;
+            border-bottom: 1px solid #369;
+            color: white;
+            cursor: move;
+            line-height: 25px;
+        }
+        #box_close {
+            float: right;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="javascript:;">注册信息</a>
+    </div>
+    <div class="d-box" id="d-box">
+        <div class="hd" id="drop">
+            <i>注册信息（可以拖拽）</i>
+            <span id="box_close">【关闭】</span>
+        </div>
+        <div class="bd"></div>
+    </div>
+
+    <script src="my.js"></script>
+    <script>
+        window.onload = function () {
+            var box = document.getElementById("d-box");
+            var drop = document.getElementById("drop");
+            var span = document.getElementById("box_close");
+
+            drop.onmousedown = function (event) {
+                event = event || window.event;
+                var pagex = event.pageX || scroll().left + event.clientX;
+                var pagey = event.pageY || scroll().top + event.clientY;
+
+                var x = pagex - box.offsetLeft;
+                var y = pagey - box.offsetTop;
+
+                document.onmousemove = function (event) {
+                    event = event || window.event;
+                    var xx = event.pageX || scroll().left + event.clientX;
+                    var yy = event.pageY || scroll().top + event.clientY;
+                    //二次操作鼠标位置  减去鼠标在盒子中的坐标
+                    xx = xx - x;
+                    yy = yy - y;
+
+                    box.style.left = xx + "px";
+                    box.style.top = yy + "px";
+
+                    //禁止文本选中（选中后取消）
+                    window.getSelection ? window.getSelection().removeAllRanges : document.selection.empty();
+
+                }
+            }
+            //事件解绑
+            drop.onmouseup = function () {
+                document.onmousemove = null;
+            }
+        
+            span.onclick = function () {
+                hide(box);
+            }
+        }
+    </script>
+</body>
+</html>

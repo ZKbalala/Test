@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .mask {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .login {
+            width: 400px;
+            height: 300px;
+            cursor: pointer;
+            background-color: #fff;
+            margin: 200px auto;
+        }
+    </style>
+</head>
+<body>
+    <a href="#">注册</a>
+    <a href="#">登录</a>
+    <div class="mask">
+        <div class="login" id="login"></div>
+    </div>
+
+    <script src="my.js"></script>
+    <script>
+        var mask = document.getElementsByClassName("mask")[0];
+        var a = document.getElementsByTagName("a")[1];
+
+        a.onclick = function (event) {
+            show(mask);
+
+            //阻止冒泡
+            event = event || window.event;
+            if(event && event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        }
+
+        document.onclick = function (event) {
+            event = event || window.event;
+
+            var aaa = event.target?event.target : event.srcElement;
+
+            if(aaa.id !== "login") {
+                hide(mask);
+            }
+        }
+    </script>
+</body>
+</html>

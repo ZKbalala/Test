@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body,html {
+            height: 100%;
+        }
+        ul {
+            list-style: none;
+            height: 100%;
+        }
+        ul li {
+            height: 100%;
+        }
+        ol {
+            list-style: none;
+            position: fixed;
+            left: 50px;
+            top: 80px;
+        }
+        ol li {
+            border: 1px solid #000;
+            width: 50px;
+            height: 50px;
+            font: 500 18px/50px "simsun";
+            text-align: center;
+            cursor: pointer;
+            margin-top: -1px;/*可使li与li之间的边框是单线条*/
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>鞋子区域</li>
+        <li>袜子区域</li>
+        <li>裤子区域</li>
+        <li>裙子区域</li>
+        <li>帽子区域</li>
+    </ul>
+    <ol>
+        <li>鞋子</li>
+        <li>袜子</li>
+        <li>裤子</li>
+        <li>裙子</li>
+        <li>帽子</li>
+    </ol>
+
+    <script src="my.js"></script>
+    <script>
+        //需求：点击ol中的li，屏幕滑动到对应ul中的li
+        //思路：利用缓动动画原理实现，利用window.scrollTo()滑动
+
+        var ul = document.getElementsByTagName("ul")[0];
+        var ol = document.getElementsByTagName("ol")[0];
+        var ulLiArr = ul.children;
+        var olLiArr = ol.children;
+
+        var target = 0;
+        var leader = 0;
+        var timer = null
+
+        var arrColor = ["pink", "blue", "yellow", "orange", "green"];
+        //利用for循环给每个数组上色
+        for (var i = 0; i < arrColor.length; i++) {
+            olLiArr[i].style.backgroundColor = arrColor[i];
+            ulLiArr[i].style.backgroundColor = arrColor[i];
+
+            //属性绑定索引值
+            olLiArr[i].index = i;
+
+            olLiArr[i].onclick = function () {
+                //获取目标位置
+                    //获取索引值
+                target = ulLiArr[this.index].offsetTop;
+
+                //要用定时器，先清定时器
+                clearInterval(timer);
+                //缓动动画
+                timer = setInterval(function () {
+                    //1.获取步长
+                    //2.二次处理步长
+                    //3.屏幕滑动
+                    //4.清除定时器
+
+                    var step = (target - leader)/10;
+
+                    step = step>0?Math.ceil(step):Math.floor(step);
+
+                    leader = leader + step;
+                    window.scrollTo(0,leader);
+
+                    if(Math.abs(target-leader)<=Math.abs(step)){
+                        window.scrollTo(0,target);
+                        clearInterval(timer);
+                    }
+                },25);
+            }
+        }
+
+        window.onscroll = function () {
+            leader = scroll().top;
+            //每次屏幕滚动，把屏幕卷去的头部赋值给leader,模拟获取显示区域距离顶部的距离
+        }
+    </script>
+</body>
+</html>
